@@ -1,0 +1,33 @@
+Important Commands:
+
+Compile assembly:
+./gcc-arm-none-eabi-10-2020-q4-major/bin/arm-none-eabi-gcc -mcpu=cortex-a7 -fpic -ffreestanding -c boot.S -o boot.o
+	
+Compile C:
+./gcc-arm-none-eabi-10-2020-q4-major/bin/arm-none-eabi-gcc -mcpu=cortex-a7 -fpic -ffreestanding -std=gnu99 -c kernel.c -o kernel.o -Wall -Wextra
+
+link:
+./gcc-arm-none-eabi-10-2020-q4-major/bin/arm-none-eabi-gcc -T linker.ld -o myos.elf -ffreestanding -O2 -nostdlib boot.o kernel.o
+
+	-mcpu=cortex-a7 means target cpu is a cortex-a7
+	-fpic means create psotition independent code. any fuction
+		variable or symbol should be done relative to current instruction and not by an abslute address
+	-ffreestanding means gcc cannot depend on libc at runtime,
+		and that there my not be a main function
+	-nostdlib indicates to linker that it should not try to link in libc
+
+QEMU command:
+	qemu-system-arm -m 256 -M raspi2 -serial stdio -kernel myos.elf
+	-runs vm that emuates raspi2 with 256 mb of mem that is 
+	set up to read and write from and to terminal as if connected to pi. elf file is seen as kernel
+
+Things to research:
+	-elf files
+	-UART
+	-GPIO
+	-linker files
+	-assembly instructions like:
+		-mrc
+		-stmia
+		-blx
+		-wfe
