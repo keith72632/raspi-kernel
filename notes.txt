@@ -22,6 +22,7 @@ QEMU command:
 	set up to read and write from and to terminal as if connected to pi. elf file is seen as kernel
 
 Things to research:
+	-turning on mulitple cpu cores
 	-elf files
 	-UART
 	-GPIO
